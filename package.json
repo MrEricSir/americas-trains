@@ -1,0 +1,24 @@
+{
+  "name": "americas-trains",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"node server/index.js\" \"vite\"",
+    "dev:server": "node server/index.js",
+    "dev:client": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "NODE_ENV=production node server/index.js"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.0.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "maplibre-gl": "^5.1.1",
+    "protobufjs": "^8.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "vite": "^6.3.5"
+  }
+}
