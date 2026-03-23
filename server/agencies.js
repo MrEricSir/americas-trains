@@ -112,6 +112,13 @@ export const agencies = [
     filterRouteIds: ['100479', '2LINE', 'TLINE'],
   },
   {
+    id: 'metra', name: 'Metra', color: '#00205B',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Metra_Logo.svg/120px-Metra_Logo.svg.png',
+    fetcher: 'gtfsrt',
+    url: 'https://gtfspublic.metrarr.com/gtfs/public/positions',
+    headers: { 'Authorization': 'Bearer ' + process.env.METRA_API_TOKEN },
+  },
+  {
     id: 'exo', name: 'Exo', color: '#00A6A2',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Exo_logo.svg/120px-Exo_logo.svg.png',
     fetcher: 'gtfsrt',

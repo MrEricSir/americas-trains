@@ -31,6 +31,7 @@ import northstarRoute from './data/northstar-route.json';
 import capmetroRoute from './data/capmetro-route.json';
 import soundtransitRoute from './data/soundtransit-route.json';
 import exoRoute from './data/exo-route.json';
+import metraRoute from './data/metra-route.json';
 
 const STYLE_URL = 'https://tiles.openfreemap.org/styles/bright';
 
@@ -179,6 +180,7 @@ const routeData = {
   capmetro: capmetroRoute,
   soundtransit: soundtransitRoute,
   exo: exoRoute,
+  metra: metraRoute,
 };
 
 // --- Amtrak ---

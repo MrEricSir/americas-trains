@@ -1,6 +1,8 @@
-const BASE_URL = 'https://raildata.njtransit.com/api/TrainData';
+import { get as cacheGet, set as cacheSet } from '../cache.js';
 
-let cachedToken = null;
+const BASE_URL = 'https://raildata.njtransit.com/api/TrainData';
+const TOKEN_KEY = 'njt:token';
+const TOKEN_TTL = 23 * 60 * 60 * 1000; // 23 hours
 
 async function getToken(username, password) {
   const form = new FormData();
@@ -11,10 +13,14 @@ async function getToken(username, password) {
     method: 'POST',
     body: form,
   });
-  if (!res.ok) throw new Error(`NJT getToken error: ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`NJT getToken error: ${res.status} ${body}`);
+  }
   const data = await res.json();
-  cachedToken = data.UserToken;
-  return cachedToken;
+  const token = data.UserToken;
+  cacheSet(TOKEN_KEY, token, TOKEN_TTL);
+  return token;
 }
 
 async function getVehicleData(token) {
@@ -30,24 +36,25 @@ async function getVehicleData(token) {
 }
 
 export async function fetch_(agency) {
-  // Get or refresh token
-  if (!cachedToken) {
-    await getToken(agency.username, agency.password);
+  // Try cached token first (survives cold starts via GCS)
+  let token = await cacheGet(TOKEN_KEY);
+  if (!token) {
+    token = await getToken(agency.username, agency.password);
   }
 
   let data;
   try {
-    data = await getVehicleData(cachedToken);
-  } catch (err) {
+    data = await getVehicleData(token);
+  } catch {
     // Token may have expired — refresh and retry once
-    await getToken(agency.username, agency.password);
-    data = await getVehicleData(cachedToken);
+    token = await getToken(agency.username, agency.password);
+    data = await getVehicleData(token);
   }
 
   // Handle "Invalid token" in response body
   if (typeof data === 'string' && data.includes('Invalid token')) {
-    await getToken(agency.username, agency.password);
-    data = await getVehicleData(cachedToken);
+    token = await getToken(agency.username, agency.password);
+    data = await getVehicleData(token);
   }
 
   const vehicles = Array.isArray(data) ? data : [];
