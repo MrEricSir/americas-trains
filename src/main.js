@@ -184,7 +184,7 @@ const routeData = {
 };
 
 // --- Amtrak ---
-const AMTRAK_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Amtrak_logo_2.svg/120px-Amtrak_logo_2.svg.png';
+const AMTRAK_LOGO = '/logos/amtrak.png';
 
 function handleAmtrakClick(coords, props) {
   showPiP(coords, buildPopupHTML(props), '\u{1F686}', AMTRAK_LOGO);
@@ -213,7 +213,7 @@ async function refreshAmtrak() {
 }
 
 // --- MBTA ---
-const MBTA_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/MBTA.svg/120px-MBTA.svg.png';
+const MBTA_LOGO = '/logos/mbta.png';
 
 function handleMbtaClick(coords, props) {
   showPiP(coords, buildMbtaPopupHTML(props), '\u{1F683}', MBTA_LOGO);
@@ -229,7 +229,7 @@ async function refreshMbta() {
 }
 
 // --- NJ Transit ---
-const NJT_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/NJT_logo.svg/120px-NJT_logo.svg.png';
+const NJT_LOGO = '/logos/njtransit.png';
 
 function handleNjtransitClick(coords, props) {
   showPiP(coords, buildNjtransitPopupHTML(props), '\u{1F683}', NJT_LOGO);
