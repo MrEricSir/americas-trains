@@ -12,6 +12,7 @@ export async function fetch_(agencyConfig) {
     const trains = data[trainNum];
     for (const train of trains) {
       if (train.lon == null || train.lat == null) continue;
+      if (train.provider === 'Brightline') continue;
 
       const stations = train.stations || [];
       const origin = stations[0];
@@ -28,6 +29,7 @@ export async function fetch_(agencyConfig) {
         properties: {
           trainNum: String(train.trainNum),
           routeName: train.routeName || 'Unknown',
+          provider: train.provider || 'Amtrak',
           iconColor: train.iconColor || '#1a73e8',
           trainTimely: train.trainTimely || '',
           origName: origin ? origin.name : '',

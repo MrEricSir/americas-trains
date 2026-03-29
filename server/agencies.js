@@ -125,6 +125,14 @@ export const agencies = [
     url: 'https://opendata.exo.quebec/ServiceGTFSR/VehiclePosition.pb?$agency=TRAINS&token=' + process.env.EXO_API_TOKEN,
   },
   {
+    id: 'go', name: 'GO Transit', color: '#3D8B37',
+    logo: '/logos/go.svg',
+    fetcher: 'gtfsrt',
+    url: 'https://api.openmetrolinx.com/OpenDataAPI/api/V1/Gtfs/Feed/VehiclePosition?key=' + process.env.METROLINX_API_KEY,
+    headers: { 'Accept': 'application/x-protobuf' },
+    filterRouteIdSuffixes: ['LW', 'LE', 'BR', 'ST', 'GT', 'MI', 'RH'],
+  },
+  {
     id: 'njtransit', name: 'NJ Transit', color: '#003DA5',
     logo: '/logos/njtransit.png',
     fetcher: 'njtransit',

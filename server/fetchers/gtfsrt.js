@@ -54,7 +54,7 @@ function getDecoder() {
 }
 
 export async function fetch_(agencyConfig) {
-  const { url, headers = {}, filterRouteIds, filterTripIds } = agencyConfig;
+  const { url, headers = {}, filterRouteIds, filterRouteIdSuffixes, filterTripIds } = agencyConfig;
 
   const res = await globalThis.fetch(url, { headers });
   if (!res.ok) throw new Error(`GTFS-RT error ${res.status}: ${url}`);
@@ -74,6 +74,12 @@ export async function fetch_(agencyConfig) {
     if (filterRouteIds) {
       const routeId = v.trip?.routeId || '';
       if (!filterRouteIds.includes(routeId)) continue;
+    }
+
+    // Apply route ID suffix filter
+    if (filterRouteIdSuffixes) {
+      const routeId = v.trip?.routeId || '';
+      if (!filterRouteIdSuffixes.some((s) => routeId.endsWith('-' + s))) continue;
     }
 
     // Apply trip ID filter

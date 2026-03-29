@@ -32,6 +32,7 @@ import capmetroRoute from './data/capmetro-route.json';
 import soundtransitRoute from './data/soundtransit-route.json';
 import exoRoute from './data/exo-route.json';
 import metraRoute from './data/metra-route.json';
+import goRoute from './data/go-route.json';
 
 const STYLE_URL = 'https://tiles.openfreemap.org/styles/bright';
 
@@ -181,13 +182,17 @@ const routeData = {
   soundtransit: soundtransitRoute,
   exo: exoRoute,
   metra: metraRoute,
+  go: goRoute,
 };
 
-// --- Amtrak ---
+// --- Amtrak / Via Rail ---
 const AMTRAK_LOGO = '/logos/amtrak.png';
+const VIARAIL_LOGO = '/logos/viarail.png';
 
 function handleAmtrakClick(coords, props) {
-  showPiP(coords, buildPopupHTML(props), '\u{1F686}', AMTRAK_LOGO);
+  const isVia = props.provider === 'Via';
+  const logo = isVia ? VIARAIL_LOGO : AMTRAK_LOGO;
+  showPiP(coords, buildPopupHTML(props), '\u{1F686}', logo);
 }
 
 async function refreshAmtrak() {

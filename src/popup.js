@@ -1,8 +1,10 @@
 export function buildPopupHTML(props) {
-  const headerColor = props.iconColor || '#1a73e8';
+  const isVia = props.provider === 'Via';
+  const headerColor = isVia ? '#FFCC00' : (props.iconColor || '#1a73e8');
+  const headerText = isVia ? 'color:#003366' : '';
 
   return `
-    <div class="popup-header" style="background:${headerColor}">
+    <div class="popup-header" style="background:${headerColor};${headerText}">
       ${props.routeName} #${props.trainNum}
     </div>
     <div class="popup-body">

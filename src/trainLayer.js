@@ -28,6 +28,7 @@ export function buildTrainGeoJSON(apiData) {
         properties: {
           trainNum: String(train.trainNum),
           routeName: train.routeName || 'Unknown',
+          provider: train.provider || 'Amtrak',
           iconColor: train.iconColor || '#1a73e8',
           trainTimely: train.trainTimely || '',
           origName: origin ? origin.name : '',
@@ -53,10 +54,11 @@ export function updateTrainMarkers(map, geojson, onClickTrain) {
     const props = feature.properties;
     const coords = feature.geometry.coordinates;
 
+    const isVia = props.provider === 'Via';
     const el = document.createElement('div');
-    el.className = 'train-marker';
+    el.className = isVia ? 'train-marker via-marker' : 'train-marker';
     el.textContent = '🚆';
-    el.title = `${props.routeName} #${props.trainNum}`;
+    el.title = `${isVia ? 'Via Rail' : 'Amtrak'} ${props.routeName} #${props.trainNum}`;
 
     el.addEventListener('click', (e) => {
       e.stopPropagation();
